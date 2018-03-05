@@ -34,10 +34,8 @@ RSpec.describe Readmodel::GotAnswerHandler do
     expect(read_models.length).to eq 1
     expect(read_models[0].id).to         eq question[:id]
     expect(read_models[0].creator_id).to eq question[:creator_id]
-    expect(read_models[0].payload).to    eq({
-      'title' => question[:title],
-      'body' =>  question[:body]
-    })
+    expect(read_models[0].title).to eq question[:title]
+    expect(read_models[0].body).to eq question[:body]
     expect(read_models[0].answers).to eq [{
       "id"=>answer[:id],
       "body"=>answer[:body],

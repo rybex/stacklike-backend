@@ -21,10 +21,8 @@ RSpec.describe Readmodel::AskedQuestionHandler do
     expect(read_models[0].id).to eq question[:id]
     expect(read_models[0].creator_id).to eq question[:creator_id]
     expect(read_models[0].answers).to         eq []
-    expect(read_models[0].payload).to eq({
-      'title' => question[:title],
-      'body' =>  question[:body]
-    })
+    expect(read_models[0].title).to eq question[:title]
+    expect(read_models[0].body).to eq question[:body]
     expect(read_models[0].created_at).to_not be_nil
   end
 end

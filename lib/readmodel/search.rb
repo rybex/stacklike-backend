@@ -15,7 +15,7 @@ module Readmodel
 
     private_class_method def load_questions(text, limit, offset)
       query     = Readmodel::Question
-      query     = query.where("to_tsvector('english', payload) @@ to_tsquery(?)", text) if text
+      query     = query.where("to_tsvector('english', title || ' ' || body) @@ to_tsquery(?)", text) if text
       query.order(:created_at).offset(offset).limit(limit).load
     end
 
@@ -24,8 +24,8 @@ module Readmodel
         {
           id:         question.id,
           creator_id: question.creator_id,
-          title:      question.payload['title'],
-          body:       question.payload['body'],
+          title:      question.title,
+          body:       question.body,
           answers:    question.answers,
           created_at: question.created_at.to_s,
         }

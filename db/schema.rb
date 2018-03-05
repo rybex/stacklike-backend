@@ -37,11 +37,12 @@ ActiveRecord::Schema.define(version: 20180304173826) do
 
   create_table "questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "creator_id", null: false
-    t.jsonb "payload", null: false
+    t.string "title", null: false
+    t.string "body", null: false
     t.jsonb "answers", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "to_tsvector('english'::regconfig, payload)", name: "questions_idx", using: :gin
+    t.index "to_tsvector('english'::regconfig, (((title)::text || ' '::text) || (body)::text))", name: "questions_idx", using: :gin
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

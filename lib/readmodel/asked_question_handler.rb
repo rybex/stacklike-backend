@@ -4,10 +4,8 @@ module Readmodel
     def call(event)
       Readmodel::Question.create(id:         event.data.fetch(:id),
                                  creator_id: event.data.fetch(:creator_id),
-                                 payload:    {
-                                   title: event.data.fetch(:title),
-                                   body:  event.data.fetch(:body),
-                                 },
+                                 title:      event.data.fetch(:title),
+                                 body:       event.data.fetch(:body),
                                  answers:    [],
       )
     end
