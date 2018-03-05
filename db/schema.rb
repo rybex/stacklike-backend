@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180304173826) do
     t.jsonb "answers", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index "to_tsvector('english'::regconfig, payload)", name: "questions_gin", using: :gin
+    t.index "to_tsvector('english'::regconfig, payload)", name: "questions_idx", using: :gin
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

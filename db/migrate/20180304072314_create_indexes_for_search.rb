@@ -1,9 +1,5 @@
 class CreateIndexesForSearch < ActiveRecord::Migration[5.1]
-  def up
-    execute "CREATE INDEX questions_gin ON questions USING gin(to_tsvector('english'::regconfig, payload));"
-  end
-
-  def down
-    execute "DROP INDEX questions_gin;"
+  def change
+    add_index :questions, "to_tsvector('english', payload)", using: :gin, name: 'questions_idx'
   end
 end
