@@ -5,6 +5,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require_relative './helpers'
 require_relative './params_factory'
+require_relative './factory_boyfriend'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -16,6 +17,7 @@ RSpec.configure do |config|
   config.include ::RailsEventStore::RSpec::Matchers
   config.include Helpers
   config.include ParamsFactory
+  config.include FactoryBoyfriend
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Readmodel::GotAnswerHandler do
   let(:handler)  { Readmodel::GotAnswerHandler.new }
-  let(:question) { question_params }
-  let(:answer)   { answer_params(question[:id]) }
+  let(:user)     { create_user_session }
+  let(:question) { question_params(user.id) }
+  let(:answer)   { answer_params(question[:id], user.id) }
 
   before do
     event = Domain::Events::AskedQuestion.new(data: question)
@@ -22,10 +23,12 @@ RSpec.describe Readmodel::GotAnswerHandler do
     expect(read_models[0].title).to      eq question[:title]
     expect(read_models[0].body).to       eq question[:body]
     expect(read_models[0].answers).to    eq [{
-      'id'         => answer[:id],
-      'body'       => answer[:body],
-      'creator_id' => answer[:creator_id],
-      'question_id'=> answer[:question_id]
+      'id'            => answer[:id],
+      'body'          => answer[:body],
+      'creator_id'    => answer[:creator_id],
+      'question_id'   => answer[:question_id],
+      'creator_name'  => user.name,
+      'creator_image' => user.image
     }]
     expect(read_models[0].created_at).to_not be_nil
   end

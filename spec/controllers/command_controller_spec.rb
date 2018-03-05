@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-MockUser = Struct.new(:id)
-
 RSpec.describe CommandsController, type: :request do
   let(:ask_question_params) {
     {
@@ -42,22 +40,22 @@ RSpec.describe CommandsController, type: :request do
   it 'should fail if user is not authorized to call this endpoint' do
     post '/commands', params: { command_name: 'Something' }
 
-    expected_error = 'You must login to call this endpoint'
+    expected_error = { 'error' => 'You must login to call this endpoint' }
 
-    expect(response.content_type).to eq 'application/json'
-    expect(response.body).to         eq expected_error
-    expect(response.status).to       eq 401
+    expect(response.content_type).to      eq 'application/json'
+    expect(parse_json(response.body)).to  eq expected_error
+    expect(response.status).to            eq 401
   end
 
   it 'fails for if command doesnt exist' do
     mock_user
     post '/commands', params: { command_name: 'NotExists' }
 
-    expected_error = "We don't provide implementation for NotExists command"
+    expected_error = { 'error' => "We don't provide implementation for NotExists command" }
 
-    expect(response.content_type).to eq 'application/json'
-    expect(response.body).to         eq expected_error
-    expect(response.status).to       eq 404
+    expect(response.content_type).to      eq 'application/json'
+    expect(parse_json(response.body)).to  eq expected_error
+    expect(response.status).to            eq 404
   end
 
   describe 'AskQuestion' do
@@ -65,9 +63,11 @@ RSpec.describe CommandsController, type: :request do
       mock_user
       post '/commands', params: ask_question_params
 
-      expect(response.content_type).to eq 'application/json'
-      expect(response.body).to         eq 'OK'
-      expect(response.status).to       eq 201
+      expected_result = { 'result' => 'OK' }
+
+      expect(response.content_type).to      eq 'application/json'
+      expect(parse_json(response.body)).to  eq expected_result
+      expect(response.status).to            eq 201
     end
 
     it 'fails with validations message for invalid payload' do
@@ -90,11 +90,11 @@ RSpec.describe CommandsController, type: :request do
       post '/commands', params: ask_question_params
       post '/commands', params: ask_question_params
 
-      expected_error = 'Question with given id already exists'
+      expected_error = { 'error' => 'Question with given id already exists' }
 
-      expect(response.content_type).to eq 'application/json'
-      expect(response.body).to         eq expected_error
-      expect(response.status).to       eq 404
+      expect(response.content_type).to      eq 'application/json'
+      expect(parse_json(response.body)).to  eq expected_error
+      expect(response.status).to            eq 404
     end
   end
 
@@ -104,9 +104,11 @@ RSpec.describe CommandsController, type: :request do
       post '/commands', params: ask_question_params
       post '/commands', params: answer_question_params
 
-      expect(response.content_type).to eq 'application/json'
-      expect(response.body).to         eq 'OK'
-      expect(response.status).to       eq 201
+      expected_result = { 'result' => 'OK' }
+
+      expect(response.content_type).to     eq 'application/json'
+      expect(parse_json(response.body)).to eq expected_result
+      expect(response.status).to           eq 201
     end
 
     it 'fails with validations message for invalid payload' do
@@ -130,11 +132,11 @@ RSpec.describe CommandsController, type: :request do
       post '/commands', params: answer_question_params
       post '/commands', params: answer_question_params
 
-      expected_error = 'Answer with given id already exists'
+      expected_error = { 'error' => 'Answer with given id already exists' }
 
-      expect(response.content_type).to eq 'application/json'
-      expect(response.body).to         eq expected_error
-      expect(response.status).to       eq 404
+      expect(response.content_type).to      eq 'application/json'
+      expect(parse_json(response.body)).to  eq expected_error
+      expect(response.status).to            eq 404
     end
   end
 
@@ -143,6 +145,6 @@ RSpec.describe CommandsController, type: :request do
   def mock_user
     allow_any_instance_of(Auth)
       .to receive(:current_user)
-      .and_return(MockUser.new(SecureRandom.uuid))
+      .and_return(create_user_session)
   end
 end

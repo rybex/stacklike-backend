@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe Domain::CommandHandlers::HandleAskQuestion do
   let(:event_store) { Rails.application.config.event_store }
   let(:handler)     { Domain::CommandHandlers::HandleAskQuestion }
-  let(:question)    { question_params }
+  let(:user)        { create_user_session }
+  let(:question)    { question_params(user.id) }
 
   it 'should successfully handle new question command' do
     command = Domain::Commands::AskQuestion.new(question)

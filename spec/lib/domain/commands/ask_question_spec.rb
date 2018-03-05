@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Domain::Commands::AskQuestion do
-  let(:question) { question_params }
+  let(:question) { question_params(generate_uuid) }
 
   it 'should successfully create new valid command' do
     command = Domain::Commands::AskQuestion.new(question)

@@ -3,10 +3,11 @@ require 'rails_helper'
 RSpec.describe Readmodel::Search do
   let(:service)        { Readmodel::Search }
   let(:handler)        { Readmodel::AskedQuestionHandler.new }
+  let(:user)           { create_user_session }
   let(:question_first) {
     {
       id:         SecureRandom.uuid,
-      creator_id: SecureRandom.uuid,
+      creator_id: user.id,
       title:      'Test title',
       body:       'Test body',
     }
@@ -15,7 +16,7 @@ RSpec.describe Readmodel::Search do
   let(:question_second) {
     {
       id:         SecureRandom.uuid,
-      creator_id: SecureRandom.uuid,
+      creator_id: user.id,
       title:      'Fooooo',
       body:       'Bazzzz',
     }

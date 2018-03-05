@@ -42,6 +42,6 @@ RSpec.describe SearchesController, type: :request do
   def mock_user
     allow_any_instance_of(Auth)
       .to receive(:current_user)
-      .and_return(MockUser.new(SecureRandom.uuid))
+      .and_return(create_user_session)
   end
 end
