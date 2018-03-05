@@ -2,25 +2,21 @@ source 'https://rubygems.org'
 
 ruby '2.5.0'
 
-git_source(:github) do |repo_name|
-  repo_name = '#{repo_name}/#{repo_name}' unless repo_name.include?('/')
-  'https://github.com/#{repo_name}.git'
-end
-
-gem 'rails', '~> 5.1.5'
+gem 'omniauth-google-oauth2'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.7'
 gem 'rack-cors'
+gem 'rails', '~> 5.1.5'
 gem 'rails_event_store'
-gem 'omniauth-google-oauth2'
 
 group :development, :test do
   gem 'database_cleaner'
   gem 'dotenv-rails', require: 'dotenv/rails-now'
   gem 'pry'
+  gem 'rails_event_store-rspec'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'rails_event_store-rspec'
+  gem 'rubocop', require: false
   gem 'timecop'
 end
 

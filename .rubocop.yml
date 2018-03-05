@@ -1,0 +1,38 @@
+AllCops:
+  TargetRubyVersion: 2.5
+  DisplayCopNames: true
+  Exclude:
+    - 'bin/*'
+    - 'config/**.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*_spec.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Style/LambdaCall:
+  EnforcedStyle: braces
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Layout/SpaceAroundOperators:
+  AllowForAlignment: true
+
+Style/HashSyntax:
+  Exclude:
+    - '**/*.rake'
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Metrics/LineLength:
+  Max: 120
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
