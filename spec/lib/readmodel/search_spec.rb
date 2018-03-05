@@ -39,12 +39,14 @@ RSpec.describe Readmodel::Search do
     handler.(event)
 
     expected_result = {
-      id:         question_second[:id],
-      creator_id: question_second[:creator_id],
-      title:      question_second[:title],
-      body:       question_second[:body],
-      answers:    [],
-      created_at: '2018-03-04 00:00:00 UTC'
+      id:             question_second[:id],
+      creator_id:     question_second[:creator_id],
+      creator_name:   user.name,
+      creator_image:  user.image,
+      title:          question_second[:title],
+      body:           question_second[:body],
+      answers:        [],
+      created_at:     '2018-03-04 00:00:00 UTC'
     }
 
     result = service.call('limit' => 1, 'offset' => 1)
@@ -60,12 +62,14 @@ RSpec.describe Readmodel::Search do
     handler.(event)
 
     expected_result = {
-      id: question_first[:id],
-      creator_id: question_first[:creator_id],
-      title: question_first[:title],
-      body: question_first[:body],
-      answers: [],
-      created_at: '2018-03-04 00:00:00 UTC'
+      id:             question_first[:id],
+      creator_id:     question_first[:creator_id],
+      creator_name:   user.name,
+      creator_image:  user.image,
+      title:          question_first[:title],
+      body:           question_first[:body],
+      answers:        [],
+      created_at:     '2018-03-04 00:00:00 UTC'
     }
 
     result = service.call('text' => 'title')

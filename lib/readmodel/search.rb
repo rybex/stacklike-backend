@@ -22,12 +22,14 @@ module Readmodel
     private_class_method def map_questions(questions)
       questions.map do |question|
         {
-          id:         question.id,
-          creator_id: question.creator_id,
-          title:      question.title,
-          body:       question.body,
-          answers:    question.answers,
-          created_at: question.created_at.to_s
+          id:            question.id,
+          creator_id:    question.creator_id,
+          creator_name:  question.creator_name,
+          creator_image: question.creator_image,
+          title:         question.title,
+          body:          question.body,
+          answers:       question.answers,
+          created_at:    question.created_at.to_s
         }
       end
     end
