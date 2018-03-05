@@ -1,0 +1,25 @@
+machine:
+  environment:
+    HANAMI_ENV: test
+  ruby:
+    version: 2.5.0
+
+dependencies:
+  pre:
+    - gem install bundler
+  override:
+    - bundle install
+
+database:
+  override:
+    - rake db:create && rake db:migrate
+
+test:
+  override:
+    - rspec
+
+deployment:
+  production:
+    branch: master
+    heroku:
+      appname: stacklike-backend
