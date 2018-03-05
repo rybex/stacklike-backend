@@ -12,7 +12,7 @@ Bundler.require(*Rails.groups)
 module StacklikeBackend
   class Application < Rails::Application
     config.load_defaults 5.1
-    config.api_only = true
+    config.api_only = false
     config.action_controller.permit_all_parameters = true
 
     config.autoload_paths << "#{Rails.root}/lib"
