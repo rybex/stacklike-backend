@@ -6,10 +6,10 @@ class CommandsController < ApplicationController
 
   def apply
     commands_bus.(merge_creator_id(params))
-    render json: 'OK', status: 201
+    render json: { result: 'OK' }, status: 201
   rescue Domain::Error,
          Infrastructure::CommandBus::CommandDoesNotExists => error
-    render json: error.message, status: 404
+    render json: { error: error.message }, status: 404
   rescue Infrastructure::Command::ValidationError => error
     render json: error.errors, status: 422
   end
@@ -17,7 +17,7 @@ class CommandsController < ApplicationController
   private
 
   def require_user
-    render json: 'You must login to call this endpoint', status: 401 unless current_user
+    render json: { error: 'You must login to call this endpoint' }, status: 401 unless current_user
   end
 
   def merge_creator_id(params)
