@@ -5,4 +5,4 @@ test:
   url: postgresql://postgres:postgres@0.0.0.0:5432/stacklike-backend_test
 
 production:
-  url: <%= ENV['STACKLIKE-BACKEND_DATABASE_URL'] %>
+  url: <%= ENV['DATABASE_URL'] %>
