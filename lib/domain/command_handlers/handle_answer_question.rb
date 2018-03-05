@@ -7,7 +7,7 @@ module Domain
         question = Domain::Question.new.load("question$#{command.question_id}")
         question.answer(command)
         question.store
-      rescue Domain::Question::AlreadySentThisAnswer => error
+      rescue Domain::Question::AlreadySentThisAnswer
         raise Domain::Error, 'Answer with given id already exists'
       end
     end

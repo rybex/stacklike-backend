@@ -19,7 +19,7 @@ module Domain
     end
 
     def answer(answer)
-      raise AlreadySentThisAnswer if @answers.any? { |answer| answer.id == answer.id }
+      raise AlreadySentThisAnswer if @answers.any? { |a| a.id == answer.id }
       apply Domain::Events::GotAnswer.new(data: answer)
     end
 

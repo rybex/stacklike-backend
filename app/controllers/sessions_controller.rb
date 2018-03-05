@@ -2,11 +2,13 @@ class SessionsController < ApplicationController
   include Auth
 
   def me
-    user = {
-      name:  current_user.name,
-      email: current_user.email,
-      image: current_user.image,
-    } if current_user
+    if current_user
+      user = {
+        name:  current_user.name,
+        email: current_user.email,
+        image: current_user.image
+      }
+    end
 
     render json: user
   end

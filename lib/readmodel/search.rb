@@ -27,7 +27,7 @@ module Readmodel
           title:      question.title,
           body:       question.body,
           answers:    question.answers,
-          created_at: question.created_at.to_s,
+          created_at: question.created_at.to_s
         }
       end
     end

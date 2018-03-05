@@ -6,8 +6,8 @@ module Readmodel
                                  creator_id: event.data.fetch(:creator_id),
                                  title:      event.data.fetch(:title),
                                  body:       event.data.fetch(:body),
-                                 answers:    [],
-      )
+                                 answers:    []
+                                )
     end
   end
 end

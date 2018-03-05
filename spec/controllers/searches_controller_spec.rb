@@ -26,6 +26,7 @@ RSpec.describe SearchesController, type: :request do
   end
 
   it "responds successfully and return list of questions" do
+    mock_user
     expect(Readmodel::Search)
       .to receive(:call)
       .and_call_original
@@ -36,5 +37,11 @@ RSpec.describe SearchesController, type: :request do
     expect(response.content_type).to            eq "application/json"
     expect(response.status).to                  eq 200
     expect(JSON.parse(response.body).length).to eq 1
+  end
+
+  def mock_user
+    allow_any_instance_of(Auth)
+      .to receive(:current_user)
+      .and_return(MockUser.new(SecureRandom.uuid))
   end
 end
