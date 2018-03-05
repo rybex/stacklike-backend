@@ -21,7 +21,7 @@ Last thing is to initialize database:
 
     rake db:create && rake db:migrate
 
-To start `Hanami` server you only need to:
+To start `Rails` server you only need to:
 
     rails s -b localhost -p 3000
 
