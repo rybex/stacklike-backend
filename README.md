@@ -1,5 +1,7 @@
 # Stacklike backend
 
+[![CircleCI](https://circleci.com/gh/rybex/stacklike-backend/tree/master.svg?style=svg)](https://circleci.com/gh/rybex/stacklike-backend/tree/master)
+
 ## Prerequisites
 
 Make sure you have Ruby `2.5.0` installed with the latest `bundler`:
