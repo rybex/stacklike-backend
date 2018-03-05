@@ -1,6 +1,6 @@
 machine:
   environment:
-    HANAMI_ENV: test
+    RAILS_ENV: test
   ruby:
     version: 2.5.0
 
