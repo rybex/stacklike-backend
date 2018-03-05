@@ -22,7 +22,7 @@ RSpec.describe Readmodel::Search do
   }
 
   before do
-    Timecop.freeze("2018-03-04T00:00:00.637Z")
+    Timecop.freeze('2018-03-04T00:00:00.637Z')
   end
 
   it 'should return empty result if questions dont exist' do
@@ -38,12 +38,12 @@ RSpec.describe Readmodel::Search do
     handler.(event)
 
     expected_result = {
-      id: question_second[:id],
+      id:         question_second[:id],
       creator_id: question_second[:creator_id],
-      title: question_second[:title],
-      body: question_second[:body],
-      answers: [],
-      created_at: "2018-03-04 00:00:00 UTC"
+      title:      question_second[:title],
+      body:       question_second[:body],
+      answers:    [],
+      created_at: '2018-03-04 00:00:00 UTC'
     }
 
     result = service.call('limit' => 1, 'offset' => 1)
@@ -64,7 +64,7 @@ RSpec.describe Readmodel::Search do
       title: question_first[:title],
       body: question_first[:body],
       answers: [],
-      created_at: "2018-03-04 00:00:00 UTC"
+      created_at: '2018-03-04 00:00:00 UTC'
     }
 
     result = service.call('text' => 'title')

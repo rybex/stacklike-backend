@@ -3,6 +3,8 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
+require_relative './helpers'
+require_relative './params_factory'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -12,6 +14,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include ::RailsEventStore::RSpec::Matchers
+  config.include Helpers
+  config.include ParamsFactory
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction

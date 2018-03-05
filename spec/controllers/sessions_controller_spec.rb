@@ -3,23 +3,23 @@ require 'rails_helper'
 RSpec.describe SessionsController, type: :request do
   let(:oauth_hash) {
     {
-      provider: "google_oauth2",
-      uid: "101757300074534447307",
+      provider: 'google_oauth2',
+      uid:      '101757300074534447307',
       info: {
-        name: "Tomek Rybczyński",
-        email: "tomek.rybka@gmail.com",
-        first_name: "Tomek",
-        last_name: "Rybczyński",
-        image: "https://lh3.googleusercontent.com/-WD6qXCLYqZA/AAAAAAAAAAI/AAAAAAAAAfc/WVamRb4pGdk/photo.jpg",
+        name:       'Tomek Rybczyński',
+        email:      'tomek.rybka@gmail.com',
+        first_name: 'Tomek',
+        last_name:  'Rybczyński',
+        image:      'https://lh3.googleusercontent.com/-WD6qXCLYqZA/AAAAAAAAAAI/AAAAAAAAAfc/WVamRb4pGdk/photo.jpg',
         urls: {
-          google: "https://plus.google.com/101757300074534447307"
+          google:   'https://plus.google.com/101757300074534447307'
         }
       },
       credentials: {
-        token: "test-token",
-        refresh_token: "12345abcdefg",
-        expires_at: 1520241957,
-        expires: true
+        token:         'test-token',
+        refresh_token: '12345abcdefg',
+        expires_at:    1520241957,
+        expires:       true
       }
     }
   }
@@ -27,7 +27,7 @@ RSpec.describe SessionsController, type: :request do
   it 'should handle google callback params and create new user and session' do
     stub_omniauth
     expected_user = {
-      'name' => oauth_hash[:info][:name],
+      'name'  => oauth_hash[:info][:name],
       'email' => oauth_hash[:info][:email],
       'image' => oauth_hash[:info][:image]
     }
@@ -40,7 +40,7 @@ RSpec.describe SessionsController, type: :request do
 
     expect(response.status).to           eq 200
     expect(response.content_type).to     eq 'application/json'
-    expect(JSON.parse(response.body)).to eq expected_user
+    expect(parse_json(response.body)).to eq expected_user
   end
 
   private

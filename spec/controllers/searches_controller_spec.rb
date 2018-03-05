@@ -22,7 +22,7 @@ RSpec.describe SearchesController, type: :request do
 
     expect(response.content_type).to     eq "application/json"
     expect(response.status).to           eq 200
-    expect(JSON.parse(response.body)).to eq []
+    expect(parse_json(response.body)).to eq []
   end
 
   it "responds successfully and return list of questions" do
@@ -36,7 +36,7 @@ RSpec.describe SearchesController, type: :request do
 
     expect(response.content_type).to            eq "application/json"
     expect(response.status).to                  eq 200
-    expect(JSON.parse(response.body).length).to eq 1
+    expect(parse_json(response.body).length).to eq 1
   end
 
   def mock_user

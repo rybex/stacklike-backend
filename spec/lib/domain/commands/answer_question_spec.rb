@@ -1,17 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Domain::Commands::AnswerQuestion do
-  let(:valid_answer)    {
-    {
-      id:          SecureRandom.uuid,
-      creator_id:  SecureRandom.uuid,
-      question_id: SecureRandom.uuid,
-      body:        'Test body',
-    }
-  }
+  let(:answer) { answer_params(generate_uuid) }
 
   it 'should successfully create new valid command' do
-    command = Domain::Commands::AnswerQuestion.new(valid_answer)
+    command = Domain::Commands::AnswerQuestion.new(answer)
 
     expect(command.valid?).to eq true
   end

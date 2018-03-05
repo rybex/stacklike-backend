@@ -39,92 +39,92 @@ RSpec.describe CommandsController, type: :request do
     }
   }
 
-  it "should fail if user is not authorized to call this endpoint" do
+  it 'should fail if user is not authorized to call this endpoint' do
     post '/commands', params: { command_name: 'Something' }
 
-    expected_error = "You must login to call this endpoint"
+    expected_error = 'You must login to call this endpoint'
 
-    expect(response.content_type).to eq "application/json"
+    expect(response.content_type).to eq 'application/json'
     expect(response.body).to         eq expected_error
     expect(response.status).to       eq 401
   end
 
-  it "fails for if command doesnt exist" do
+  it 'fails for if command doesnt exist' do
     mock_user
     post '/commands', params: { command_name: 'NotExists' }
 
     expected_error = "We don't provide implementation for NotExists command"
 
-    expect(response.content_type).to eq "application/json"
+    expect(response.content_type).to eq 'application/json'
     expect(response.body).to         eq expected_error
     expect(response.status).to       eq 404
   end
 
-  describe "AskQuestion" do
-    it "responds sucessfully" do
+  describe 'AskQuestion' do
+    it 'responds sucessfully' do
       mock_user
       post '/commands', params: ask_question_params
 
-      expect(response.content_type).to eq "application/json"
-      expect(response.body).to         eq "OK"
+      expect(response.content_type).to eq 'application/json'
+      expect(response.body).to         eq 'OK'
       expect(response.status).to       eq 201
     end
 
-    it "fails with validations message for invalid payload" do
+    it 'fails with validations message for invalid payload' do
       mock_user
       post '/commands', params: invalid_ask_question_params
 
       expected_errors = {
-        "id"=>["can't be blank"],
-        "title"=>["can't be blank"],
-        "body"=>["can't be blank"]
+        'id'=>["can't be blank"],
+        'title'=>["can't be blank"],
+        'body'=>["can't be blank"]
       }
 
-      expect(response.content_type).to     eq "application/json"
-      expect(JSON.parse(response.body)).to eq expected_errors
+      expect(response.content_type).to     eq 'application/json'
+      expect(parse_json(response.body)).to eq expected_errors
       expect(response.status).to           eq 422
     end
 
-    it "fails with domain message" do
+    it 'fails with domain message' do
       mock_user
       post '/commands', params: ask_question_params
       post '/commands', params: ask_question_params
 
       expected_error = 'Question with given id already exists'
 
-      expect(response.content_type).to eq "application/json"
+      expect(response.content_type).to eq 'application/json'
       expect(response.body).to         eq expected_error
       expect(response.status).to       eq 404
     end
   end
 
-  describe "AnswerQuestion" do
-    it "responds sucessfully" do
+  describe 'AnswerQuestion' do
+    it 'responds sucessfully' do
       mock_user
       post '/commands', params: ask_question_params
       post '/commands', params: answer_question_params
 
-      expect(response.content_type).to eq "application/json"
-      expect(response.body).to         eq "OK"
+      expect(response.content_type).to eq 'application/json'
+      expect(response.body).to         eq 'OK'
       expect(response.status).to       eq 201
     end
 
-    it "fails with validations message for invalid payload" do
+    it 'fails with validations message for invalid payload' do
       mock_user
       post '/commands', params: invalid_answer_question_params
 
       expected_errors = {
-        "id"=>["can't be blank"],
-        "question_id"=>["can't be blank"],
-        "body"=>["can't be blank"]
+        'id'=>["can't be blank"],
+        'question_id'=>["can't be blank"],
+        'body'=>["can't be blank"]
       }
 
-      expect(response.content_type).to     eq "application/json"
-      expect(JSON.parse(response.body)).to eq expected_errors
+      expect(response.content_type).to     eq 'application/json'
+      expect(parse_json(response.body)).to eq expected_errors
       expect(response.status).to           eq 422
     end
 
-    it "fails with domain message" do
+    it 'fails with domain message' do
       mock_user
       post '/commands', params: ask_question_params
       post '/commands', params: answer_question_params
@@ -132,7 +132,7 @@ RSpec.describe CommandsController, type: :request do
 
       expected_error = 'Answer with given id already exists'
 
-      expect(response.content_type).to eq "application/json"
+      expect(response.content_type).to eq 'application/json'
       expect(response.body).to         eq expected_error
       expect(response.status).to       eq 404
     end

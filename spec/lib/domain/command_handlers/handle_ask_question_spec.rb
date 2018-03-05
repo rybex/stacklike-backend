@@ -3,14 +3,7 @@ require 'rails_helper'
 RSpec.describe Domain::CommandHandlers::HandleAskQuestion do
   let(:event_store) { Rails.application.config.event_store }
   let(:handler)     { Domain::CommandHandlers::HandleAskQuestion }
-  let(:question)    {
-    {
-      id:         SecureRandom.uuid,
-      creator_id: SecureRandom.uuid,
-      title:      'Test title',
-      body:       'Test body',
-    }
-  }
+  let(:question)    { question_params }
 
   it 'should successfully handle new question command' do
     command = Domain::Commands::AskQuestion.new(question)
@@ -25,7 +18,9 @@ RSpec.describe Domain::CommandHandlers::HandleAskQuestion do
     command = Domain::Commands::AskQuestion.new(question)
 
     expect{ handler.(command) }.to_not raise_error
-    expect{ handler.(command) }.to raise_error(Domain::Error).with_message('Question with given id already exists')
+    expect{ handler.(command) }
+    .to raise_error(Domain::Error)
+    .with_message('Question with given id already exists')
 
     expect(event_store).to have_published(
       an_event(Domain::Events::AskedQuestion).with_data(question)

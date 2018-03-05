@@ -1,24 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Readmodel::GotAnswerHandler do
-  let(:handler) { Readmodel::GotAnswerHandler.new }
-  let(:question) {
-    {
-      id:         SecureRandom.uuid,
-      creator_id: SecureRandom.uuid,
-      title:      'Test title',
-      body:       'Test body',
-    }
-  }
-
-  let(:answer)    {
-    {
-      id:          SecureRandom.uuid,
-      question_id: question[:id],
-      creator_id:  SecureRandom.uuid,
-      body:        'Test body',
-    }
-  }
+  let(:handler)  { Readmodel::GotAnswerHandler.new }
+  let(:question) { question_params }
+  let(:answer)   { answer_params(question[:id]) }
 
   before do
     event = Domain::Events::AskedQuestion.new(data: question)
@@ -31,16 +16,16 @@ RSpec.describe Readmodel::GotAnswerHandler do
 
     read_models = Readmodel::Question.all
 
-    expect(read_models.length).to eq 1
+    expect(read_models.length).to        eq 1
     expect(read_models[0].id).to         eq question[:id]
     expect(read_models[0].creator_id).to eq question[:creator_id]
-    expect(read_models[0].title).to eq question[:title]
-    expect(read_models[0].body).to eq question[:body]
-    expect(read_models[0].answers).to eq [{
-      "id"=>answer[:id],
-      "body"=>answer[:body],
-      "creator_id"=>answer[:creator_id],
-      "question_id"=>answer[:question_id]
+    expect(read_models[0].title).to      eq question[:title]
+    expect(read_models[0].body).to       eq question[:body]
+    expect(read_models[0].answers).to    eq [{
+      'id'         => answer[:id],
+      'body'       => answer[:body],
+      'creator_id' => answer[:creator_id],
+      'question_id'=> answer[:question_id]
     }]
     expect(read_models[0].created_at).to_not be_nil
   end
