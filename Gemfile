@@ -10,7 +10,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.7'
 gem 'rack-cors'
 gem 'rails_event_store'
-gem 'redcarpet'
+gem 'omniauth-google-oauth2'
 
 group :development, :test do
   gem 'database_cleaner'
