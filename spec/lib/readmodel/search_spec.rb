@@ -38,18 +38,22 @@ RSpec.describe Readmodel::Search do
     event = Domain::Events::AskedQuestion.new(data: question_second)
     handler.(event)
 
-    expected_result = {
-      id:             question_second[:id],
-      creator_id:     question_second[:creator_id],
-      creator_name:   user.name,
-      creator_image:  user.image,
-      title:          question_second[:title],
-      body:           question_second[:body],
-      answers:        [],
-      created_at:     '2018-03-04 00:00:00 UTC'
-    }
+    expected_result = expected_result(question_first, 1)
 
-    result = service.call('limit' => 1, 'offset' => 1)
+    result = service.call('limit' => 1)
+
+    expect(result.length).to eq 1
+    expect(result.first).to  eq expected_result
+  end
+
+  it 'should return limited result if cursor provided' do
+    event = Domain::Events::AskedQuestion.new(data: question_first)
+    handler.(event)
+    event = Domain::Events::AskedQuestion.new(data: question_second)
+    handler.(event)
+
+    expected_result = expected_result(question_second, 2)
+    result          = service.call('cursor' => 1)
 
     expect(result.length).to eq 1
     expect(result.first).to  eq expected_result
@@ -61,20 +65,26 @@ RSpec.describe Readmodel::Search do
     event = Domain::Events::AskedQuestion.new(data: question_second)
     handler.(event)
 
-    expected_result = {
-      id:             question_first[:id],
-      creator_id:     question_first[:creator_id],
-      creator_name:   user.name,
-      creator_image:  user.image,
-      title:          question_first[:title],
-      body:           question_first[:body],
-      answers:        [],
-      created_at:     '2018-03-04 00:00:00 UTC'
-    }
-
-    result = service.call('text' => 'title')
+    expected_result = expected_result(question_first, 1)
+    result          = service.call('text' => 'title')
 
     expect(result.length).to eq 1
     expect(result.first).to  eq expected_result
+  end
+
+  private
+
+  def expected_result(question, seq)
+    {
+      id:             question[:id],
+      creator_id:     question[:creator_id],
+      creator_name:   user.name,
+      creator_image:  user.image,
+      title:          question[:title],
+      body:           question[:body],
+      answers:        [],
+      cursor:         seq,
+      created_at:     '2018-03-04'
+    }
   end
 end
