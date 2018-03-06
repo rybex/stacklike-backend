@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180305152506) do
+ActiveRecord::Schema.define(version: 20180306153502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20180305152506) do
     t.datetime "updated_at", null: false
     t.string "creator_name", null: false
     t.string "creator_image", null: false
+    t.serial "cursor"
     t.index "to_tsvector('english'::regconfig, (((title)::text || ' '::text) || (body)::text))", name: "questions_idx", using: :gin
   end
 

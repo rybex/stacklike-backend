@@ -25,6 +25,8 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
+    ActiveRecord::Base.connection.execute("ALTER SEQUENCE questions_cursor_seq RESTART WITH 1")
+
     DatabaseCleaner.cleaning do
       example.run
     end
